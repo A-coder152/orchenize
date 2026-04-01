@@ -26,7 +26,31 @@ This repo will occasionally be updated with any code changes.
 - **Custom Periods** - Create color-coded time blocks for your daily routine
 - **Progress Tracking** - Visual progress indicators for assignments
 
-## 🚀 Quick Start (for self downloading)
+## Usage
+
+1. **Register** a new account at `/register`
+2. **Add Courses** - Define your academic courses
+3. **Add Assignments** - Track homework, projects, and deadlines
+4. **Set Periods** - Block out your regular schedule (classes, meals, sleep)
+5. **Use AI Arrange** - Let AI optimize your study schedule
+6. **View Calendar** - See your weekly schedule at a glance
+
+## AI Features
+
+### AI Schedule Arrangement
+The AI can intelligently arrange your study schedule based on:
+- Your existing calendar commitments
+- Assignment due dates and priorities
+- Custom regimen intensity (Very Low → Very High)
+- Expected time requirements per assignment
+
+### AI Settings
+Configure your AI preferences:
+- Model selection (default: `gemini-2.5-flash`)
+- Study regimen intensity
+- Custom scheduling preferences
+
+## Quickstart for self downloading
 
 ### Prerequisites
 
@@ -125,21 +149,6 @@ The application uses SQLite with the following tables:
 - **assignments** - Assignments with due dates, progress, priority weights
 - **periods** - Scheduled time blocks (recurring support: daily/weekly)
 
-## AI Features
-
-### AI Schedule Arrangement
-The AI can intelligently arrange your study schedule based on:
-- Your existing calendar commitments
-- Assignment due dates and priorities
-- Custom regimen intensity (Very Low → Very High)
-- Expected time requirements per assignment
-
-### AI Settings
-Configure your AI preferences:
-- Model selection (default: `gemini-2.5-flash`)
-- Study regimen intensity
-- Custom scheduling preferences
-
 ## Security
 
 - Password hashing with Werkzeug
@@ -157,15 +166,6 @@ Configure your AI preferences:
 | `GOOGLE_GENAI_MODEL` | AI model to use | No (default: gemini-2.5-flash) |
 | `DATABASE_PATH` | SQLite database path | No (default: database.db) |
 | `FLASK_SECURE_COOKIES` | Enable HTTPS-only cookies | No (default: true) |
-
-## Usage
-
-1. **Register** a new account at `/register`
-2. **Add Courses** - Define your academic courses
-3. **Add Assignments** - Track homework, projects, and deadlines
-4. **Set Periods** - Block out your regular schedule (classes, meals, sleep)
-5. **Use AI Arrange** - Let AI optimize your study schedule
-6. **View Calendar** - See your weekly schedule at a glance
 
 ## Legacy Notice
 
