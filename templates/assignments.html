@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Courses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="header">
+    <div class="header-left">
+        <a href="/account" class="account-settings-icon" title="Account Settings"><i class="fas fa-cog"></i></a>
+        <span class="welcome">Welcome, {{ user }}</span>
+    </div>
+
+    <div class="header-middle">
+        <a href="/" class="nav-icon home-icon" title="Home"><i class="fas fa-home"></i></a>
+        <a href="/courses" class="nav-icon courses-icon" title="Courses"><i class="fas fa-book"></i></a>
+        <a href="/assignment/add" class="add-button" title="Add Period">+</a>
+    </div>
+
+    <div class="header-right">
+        <a class="logout-icon" href="/logout" title="Log Out"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+</div>
+    <main class="assignment-container">
+        <h2>Assignments</h2>
+
+        <h3>Incomplete</h3>
+        <ul class="assignment-list">
+            {% for assignment in incomplete_assignments %}
+            <li>
+                <div class="assignment-progress" style="width: {{ assignment.progress }}%;"></div>
+                <div class="assignment-content">
+                    <span>{{ assignment.name }} (Due: {{ assignment.due_date.split('T')[0] }})</span>
+                    <a href="/assignment/{{ assignment.id }}" class="view-button">View</a>
+                </div>
+            </li>
+            {% endfor %}
+            {% if incomplete_assignments|length == 0 %}
+            <p>No incomplete assignments 🎉</p>
+            {% endif %}
+        </ul>
+
+        <h3>Completed</h3>
+        <ul class="assignment-list">
+            {% for assignment in complete_assignments %}
+            <li>
+                <div class="assignment-progress" style="width: 100%; background-color: #cce5ff;"></div>
+                <div class="assignment-content">
+                    <span>{{ assignment.name }} (Due: {{ assignment.due_date.split('T')[0] }})</span>
+                    <a href="/assignment/{{ assignment.id }}" class="view-button">View</a>
+                </div>
+            </li>
+            {% endfor %}
+            {% if complete_assignments|length == 0 %}
+            <p>No completed assignments yet.</p>
+            {% endif %}
+        </ul>
+    </main>
+</body>
+</html>

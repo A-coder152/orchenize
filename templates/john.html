@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+<div class="header">
+    <div class="header-left">
+        <a href="/account" class="account-settings-icon" title="Account Settings"><i class="fas fa-cog"></i></a>
+        <span class="welcome">Welcome, {{ user }}</span>
+    </div>
+
+    <div class="header-middle">
+        <a href="/courses" class="nav-icon courses-icon" title="Courses"><i class="fas fa-book"></i></a>
+        <a href="/assignments" class="nav-icon assignments-icon" title="Assignments"><i class="fas fa-tasks"></i></a>
+        <a href="/period/add" class="add-button" title="Add Period">+</a>
+    </div>
+
+    <div class="header-right">
+        <a class="logout-icon" href="/logout" title="Log Out"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+</div>
+
+<main class="container">
+    <div class="week-navigation">
+        <a class="week-nav-icon-button prev-week-icon" href="/{{ extra - 1 }}" title="Previous week">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <a class="nav-icon ai-settings-icon" href="/ai/settings" title="AI Settings">
+        <i class="fas fa-robot"></i>  <!-- Robot icon (AI) -->
+    </a>
+        <a class="week-nav-icon-button next-week-icon" href="/{{ extra + 1 }}" title="Next week">
+            <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+    <div class="calendar-table-wrapper">
+        <table class="calendar-table">
+            <thead>
+            <tr>
+                <th class="time-col">Time</th>
+                {% for day in week_dates %}
+                    <th>{{ day.strftime('%a, %b %d') }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% set occupied_cells = {} %}
+            {% for hour in range(24) %}
+                {% for minute_interval in range(0, 60, 5) %}
+                    {% set time_str = "%02d:%02d" % (hour, minute_interval) %}
+                    <tr class="time-slot-row" data-hour="{{ hour }}" data-minute="{{ minute_interval }}">
+                        {% if minute_interval == 0 %}
+                            <th class="time-col" scope="row" rowspan="12">{{ "%02d:00" % hour }}</th>
+                        {% endif %}
+                        {% for day in week_dates %}
+                            {% set day_str = day.strftime('%Y-%m-%d') %}
+                            {% if occupied_cells.get(day_str) and time_str in occupied_cells[day_str] %}
+                                {# Cell is occupied, don't render anything #}
+                            {% else %}
+                                {% if schedule.get(day_str) and schedule[day_str].get(time_str) %}
+                                    {% set period = schedule[day_str][time_str] %}
+                                    <td class="period-block" rowspan="{{ period.rowspan }}" style="background-color: {{ period.color }} !important;">
+                                        <a class="period-text" href="/period/{{ period.id }}"> {{ period.name }} </a>
+                                        {% for i in range(period.rowspan) %}
+                                            {% set next_minute_offset = minute_interval + (i * 5) %}
+                                            {% set next_hour = hour + (next_minute_offset // 60) %}
+                                            {% set next_minute = next_minute_offset % 60 %}
+                                            {% set next_time_key = "%02d:%02d" % (next_hour % 24, next_minute) %}
+                                            {% if occupied_cells.get(day_str) is none %}
+                                                {% do occupied_cells.update({day_str: {}}) %}
+                                            {% endif %}
+                                            {% do occupied_cells[day_str].update({next_time_key: True}) %}
+                                        {% endfor %}
+                                    </td>
+                                {% else %}
+                                    <td></td> {# Mark empty cells for visibility #}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

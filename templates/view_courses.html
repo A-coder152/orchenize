@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Courses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="header">
+    <div class="header-left">
+        <a href="/account" class="account-settings-icon" title="Account Settings"><i class="fas fa-cog"></i></a>
+        <span class="welcome">Welcome, {{ user }}</span>
+    </div>
+
+    <div class="header-middle">
+        <a href="/" class="nav-icon home-icon" title="Home"><i class="fas fa-home"></i></a>
+        <a href="/assignments" class="nav-icon assignments-icon" title="Assignments"><i class="fas fa-tasks"></i></a>
+        <a href="/course/add" class="add-button" title="Add Period">+</a>
+    </div>
+
+    <div class="header-right">
+        <a class="logout-icon" href="/logout" title="Log Out"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+</div>
+    <main class="courses-container">
+        <h2>Courses</h2>
+        <ul class="courses-list">
+            {% for course in courses %}
+            <li>
+                <span>{{ course.name }}</span>
+                <a href="/course/{{ course.id }}" class="view-button">View</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>

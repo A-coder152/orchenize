@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Course</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+        <a href="/account" class="account-settings-icon" title="Account Settings"><i class="fas fa-cog"></i></a>
+        <span class="welcome">Welcome, {{ user }}</span>
+    </div>
+
+    <div class="header-middle">
+        <a href="/" class="nav-icon home-icon" title="Home"><i class="fas fa-home"></i></a>
+        <a href="/courses" class="nav-icon courses-icon" title="Courses"><i class="fas fa-book"></i></a>
+        <a href="/assignments" class="nav-icon assignments-icon" title="Assignments"><i class="fas fa-tasks"></i></a>
+    </div>
+
+    <div class="header-right">
+        <a class="logout-icon" href="/logout" title="Log Out"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+    </div>
+
+    <main class="three-column-container">
+        <!-- Left column: Edit course -->
+        <section class="column edit-course">
+            <h2>Edit Course</h2>
+            {% if error %}
+                <p class="error-message">{{ error }}</p>
+            {% endif %}
+            <form method="post">
+                <div class = 'form-group'>
+                <label for="name">Course Name:</label>
+                <input type="text" id="name" name="name" value="{{ course.name }}" required> </div>
+                <div class="form-group">
+    <label for="color_selector">Select Color:</label>
+    <input type="color" id="color_selector" name="color_selector" value="{{ course.color }}">
+</div>
+<button type="submit" class="submit-button">Save Changes</button>
+            </form>
+            <div class="form-actions">
+                <a href="/course/delete/{{ course.id }}" class="delete-button" onclick="return confirm('Are you sure you want to delete this course?')">Delete Course</a>
+            </div>
+        </section>
+
+        <!-- Middle column: Assignments -->
+        <section class="column assignments-list">
+            <h2>Assignments</h2>
+            {% if assignments %}
+                <ul class="assignment-periods">
+                    {% for assignment in assignments %}
+                        <li>
+                            <a href="/assignment/{{ assignment.id }}">
+                                {{ assignment.name }}</a>
+                                <p>{{ assignment.progress }}% complete - due {{ assignment.due_date }}
+                            </p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No assignments found.</p>
+            {% endif %}
+        </section>
+
+        <!-- Right column: Periods -->
+        <section class="column periods-list">
+            <h2>Periods</h2>
+            {% if periods %}
+                <ul class="assignment-periods">
+                    {% for period in periods %}
+                        <li>
+                            <a href="/period/{{ period.id }}">
+                                {{ period.period_name }}</a>
+                                <p>{{ period.start_time }} - {{ period.end_time }}
+                            </p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No periods found.</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

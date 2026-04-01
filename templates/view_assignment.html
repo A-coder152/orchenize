@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Assignment</title>
+    <link rel="stylesheet" href="/static/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <a href="/account" class="account-settings-icon" title="Account Settings"><i class="fas fa-cog"></i></a>
+            <span class="welcome">Welcome, {{ user }}</span>
+        </div>
+        <div class="header-middle">
+            <a href="/" class="nav-icon home-icon" title="Home"><i class="fas fa-home"></i></a>
+            <a href="/courses" class="nav-icon courses-icon" title="Courses"><i class="fas fa-book"></i></a>
+        <a href="/assignments" class="nav-icon assignments-icon" title="Assignments"><i class="fas fa-tasks"></i></a>
+        </div>
+        <div class="header-right">
+            <a class="logout-icon" href="/logout" title="Log Out"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </div>
+    <main class="assignment-view-container">
+        <div class="assignment-edit-form">
+            <h2>Edit Assignment</h2>
+            {% if error %}
+                <p class="error-message">{{ error }}</p>
+            {% endif %}
+            <form method="post">
+                <div class="form-group">
+                    <label for="name">Assignment Name:</label>
+                    <input type="text" id="name" name="name" value="{{ assignment.name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="due_date">Due Date:</label>
+                    <input type="datetime-local" id="due_date" name="due_date" value="{{ assignment.due_date }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="progress">Progress (%):</label>
+                    <input type="number" id="progress" name="progress" value="{{ assignment.progress }}" min="0" max="100" required>
+                </div>
+                <div class="form-group">
+                <label for="expected_time">Expected time (hours):</label>
+                <input type="number" id="expected_time" name="expected_time" min = '0' step = '0.1' value="{{ assignment.expected_time }}" required>
+            </div>
+                                <div class="form-group">
+                    <label for="parent">Parent Course:</label>
+                    <select name="parent" id="parent">
+                        <option value = "none">None</option>
+                        {% for course in courses %}
+                            <option value="{{ course.id }}" {% if course.id == assignment.parent|int %}selected{% endif %}>{{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="weight">Priority:</label>
+                    <input type="text" id="weight" name="weight" value="{{ assignment.weight }}">
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes:</label>
+                    <textarea id="notes" name="notes">{{ assignment.notes }}</textarea>
+                </div>
+                <div class="form-group">
+                <label for="reset">Reset Progress:</label>
+                <select id="reset" name="reset">
+                    <option value="none" {% if assignment.reset == "none" %}selected{% endif %}>Never</option>
+                    <option value="daily" {% if assignment.reset == "daily" %}selected{% endif %}>Daily</option>
+                    <option value="weekly" {% if assignment.reset == "weekly" %}selected{% endif %}>Weekly</option>
+                    <!--<option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option> -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="reset_time">Initial Reset:</label>
+                <input type="datetime-local" id="reset_time" name="reset_time" value="{{ assignment.reset_time }}">
+            </div>
+                <div class="form-group">
+    <label for="color_selector">Select Color:</label>
+    <input type="color" id="color_selector" name="color_selector" value="{{ assignment.color }}">
+    {% if assignment.parent %} <p>Setting a different color will override the parent color.</p> {% endif %}
+</div>
+                <button type="submit" class="submit-button">Update Assignment</button>
+            </form>
+            <div class="form-actions">
+                <a href="/assignment/delete/{{ assignment.id }}" class="delete-button" onclick="return confirm('Are you sure you want to delete this assignment?')">Delete Assignment</a>
+            </div>
+        </div>
+
+        <div class="assignment-periods">
+            <h2>Associated Periods</h2>
+            {% if periods %}
+                <ul class="period-list">
+                    {% for period in periods %}
+                        <li>
+                            <a href="/period/{{ period.id }}">
+                                {{ period.period_name }}</a>
+                                <p>{{ period.start_time }} - {{ period.end_time }}
+                            </p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No periods associated with this assignment yet.</p>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

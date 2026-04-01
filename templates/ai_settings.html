@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <a href="/account" class="account-settings-icon" title="Account Settings"><i class="fas fa-cog"></i></a>
+            <span class="welcome">Welcome, {{ usert }}</span>
+        </div>
+        <div class="header-middle">
+            <a href="/" class="nav-icon home-icon" title="Home"><i class="fas fa-home"></i></a>
+            <a href="/courses" class="nav-icon courses-icon" title="Courses"><i class="fas fa-book"></i></a>
+            <a href="/assignments" class="nav-icon assignments-icon" title="Assignments"><i class="fas fa-tasks"></i></a>
+        </div>
+        <div class="header-right">
+            <a class="logout-icon" href="/logout" title="Log Out"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </div>
+
+    <div class="ai-buttons">
+        <a href="/ai/arrange/1" class="arrange-day-btn" title="Rearrange Today's Schedule">
+            <i class="fas fa-calendar-day"></i> Arrange Today
+        </a>
+        <a href="/ai/arrange/3" class="arrange-3days-btn" title="Rearrange Next 3 Days">
+            <i class="fas fa-calendar-alt"></i> Arrange 3 Days
+        </a>
+    </div>
+
+    <main class="form-container">
+        <h2>AI settings</h2>
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+        <form method="POST" action="/ai/settings">
+            <div class="form-group">
+                <label for="sleep_start">Sleep Start Time:</label>
+                <input type="time" id="sleep_start" name="sleep_start" required value="{{ user.sleep_start }}">
+            </div>
+
+            <div class="form-group">
+                <label for="sleep_end">Sleep End Time:</label>
+                <input type="time" id="sleep_end" name="sleep_end" required value="{{ user.sleep_end }}">
+            </div>
+
+            <div class="form-group">
+                <label for="regimen_short">Short Term Work Intensity:</label>
+                <select id="regimen_short" name="regimen_short">
+                    <option value="Very low" {% if user.regimen_short == 'Very low' %}selected{% endif %}>Very low</option>
+                    <option value="low" {% if user.regimen_short == 'low' %}selected{% endif %}>Low</option>
+                    <option value="average" {% if user.regimen_short == 'average' %}selected{% endif %}>Average</option>
+                    <option value="high" {% if user.regimen_short == 'high' %}selected{% endif %}>High</option>
+                    <option value="very high" {% if user.regimen_short == 'very high' %}selected{% endif %}>Very high</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="regimen_long">Long Term Work Intensity:</label>
+                <select id="regimen_long" name="regimen_long">
+                    <option value="Very low" {% if user.regimen_long == 'Very low' %}selected{% endif %}>Very low</option>
+                    <option value="low" {% if user.regimen_long == 'low' %}selected{% endif %}>Low</option>
+                    <option value="average" {% if user.regimen_long == 'average' %}selected{% endif %}>Average</option>
+                    <option value="high" {% if user.regimen_long == 'high' %}selected{% endif %}>High</option>
+                    <option value="very high" {% if user.regimen_long == 'very high' %}selected{% endif %}>Very high</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="presents">Preset system:</label>
+                <select id="presents" name="presents">
+                    <option value="other" selected>Custom</option>
+                    <option value="Pomodoro" {% if user.preset == 'Pomodoro' %}selected{% endif %}>Pomodoro (25 minutes work, 5 minutes break)</option>
+                    <option value="Balanced" {% if user.preset == 'Balanced' %}selected{% endif %}>Balanced (45 minutes work, 15 minutes break)</option>
+                    <option value="Locked" {% if user.preset == 'Locked' %}selected{% endif %}>Locked in (90 minutes work, 30 minutes break)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="break_duration">Break Duration (minutes):</label>
+                <input type="number" id="break_duration" name="break_duration" required value="{{ user.break_duration}}">
+            </div>
+
+            <div class="form-group">
+                <label for="max_session_length">Max Session Length (minutes):</label>
+                <input type="number" id="max_session_length" name="max_session_length" value="{{ user.max_session_length }}" placeholder="e.g., 120">
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Notes to AI:</label>
+                <textarea id="notes" name="notes" rows="3" {% if user.ai_notes != "" %} placeholder="{{ user.ai_notes }}" {% else %} placeholder="Additional notes..." {% endif %}></textarea>
+            </div>
+
+            <button type="submit">Save Preferences</button>
+        </form>
+
+        <p class="login-link"><a href="/">Back to Schedule</a></p>
+    </main>
+</body>
+</html>
