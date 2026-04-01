@@ -2,23 +2,31 @@
 
 > **AI-assisted academic organizer and scheduling web application**
 
-Orchenize Legacy is a Flask-based web application designed to help students organize their academic life. It combines traditional course/assignment management with AI-powered scheduling assistance using Google's Gemini AI.
+Orchenize (Legacy) is a Flask-based web application designed to help students organize their academic life. It combines traditional course/assignment management with AI-powered scheduling assistance using Google's Gemini AI.
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![Flask](https://img.shields.io/badge/Flask-2.x-green.svg)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-## ✨ Features
+## Orchenize is available right now!
+[Go use it!](acoder152.pythonanywhere.com)
+> **Disclaimer:** The code on the repo may not fully match the code in production.
 
-- **📅 Weekly Calendar View** - Visual schedule with support for daily/weekly recurring events
-- **📚 Course Management** - Add, edit, and track your courses
-- **📝 Assignment Tracking** - Manage assignments with due dates, progress tracking, and priority weights
-- **🤖 AI-Powered Scheduling** - Generate optimized study schedules using Google Gemini AI
-- **👤 User Authentication** - Secure multi-user support with individual databases
-- **🎨 Custom Periods** - Create color-coded time blocks for your daily routine
-- **📊 Progress Tracking** - Visual progress indicators for assignments
+### Quick notes
+Orchenize started development in Feb 2025, was launched June 2025, and is now being open sourced.
+This repo will occasionally be updated with any code changes.
 
-## 🚀 Quick Start
+ ## Features
+
+- **Weekly Calendar View** - Visual schedule with support for daily/weekly recurring events
+- **Course Management** - Add, edit, and track your courses
+- **Assignment Tracking** - Manage assignments with due dates, progress tracking, and priority weights
+- **AI-Powered Scheduling** - Generate optimized study schedules using Google Gemini AI
+- **User Authentication** - Secure multi-user support with individual databases
+- **Custom Periods** - Create color-coded time blocks for your daily routine
+- **Progress Tracking** - Visual progress indicators for assignments
+
+## 🚀 Quick Start (for self downloading)
 
 ### Prerequisites
 
@@ -29,8 +37,8 @@ Orchenize Legacy is a Flask-based web application designed to help students orga
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd Orchenize-Legacy
+   git clone https://github.com/A-coder152/orchenize
+   cd orchenize
    ```
 
 2. **Create a virtual environment**
@@ -74,7 +82,7 @@ Orchenize Legacy is a Flask-based web application designed to help students orga
    
    Open your browser and navigate to `http://localhost:5000`
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Orchenize Legacy/
@@ -97,7 +105,7 @@ Orchenize Legacy/
 └── README.md
 ```
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Component | Technology |
 |-----------|------------|
@@ -108,7 +116,7 @@ Orchenize Legacy/
 | **Icons** | Font Awesome |
 | **Deployment** | Gunicorn |
 
-## 📊 Database Schema
+## Database Schema
 
 The application uses SQLite with the following tables:
 
@@ -117,7 +125,7 @@ The application uses SQLite with the following tables:
 - **assignments** - Assignments with due dates, progress, priority weights
 - **periods** - Scheduled time blocks (recurring support: daily/weekly)
 
-## 🤖 AI Features
+## AI Features
 
 ### AI Schedule Arrangement
 The AI can intelligently arrange your study schedule based on:
@@ -132,7 +140,7 @@ Configure your AI preferences:
 - Study regimen intensity
 - Custom scheduling preferences
 
-## 🔒 Security
+## Security
 
 - Password hashing with Werkzeug
 - Session-based authentication
@@ -140,7 +148,7 @@ Configure your AI preferences:
 - Secure cookie support (configurable)
 - SQL injection prevention via parameterized queries
 
-## ⚙️ Configuration
+## Configuration
 
 | Environment Variable | Description | Required |
 |---------------------|-------------|----------|
@@ -150,7 +158,7 @@ Configure your AI preferences:
 | `DATABASE_PATH` | SQLite database path | No (default: database.db) |
 | `FLASK_SECURE_COOKIES` | Enable HTTPS-only cookies | No (default: true) |
 
-## 📝 Usage
+## Usage
 
 1. **Register** a new account at `/register`
 2. **Add Courses** - Define your academic courses
@@ -159,7 +167,7 @@ Configure your AI preferences:
 5. **Use AI Arrange** - Let AI optimize your study schedule
 6. **View Calendar** - See your weekly schedule at a glance
 
-## 🚧 Legacy Notice
+## Legacy Notice
 
 > This is a **legacy version** of the Orchenize project. It represents an earlier implementation and may lack modern features, optimizations, or best practices found in newer versions.
 
@@ -171,11 +179,11 @@ Potential improvements for future versions:
 - [ ] Export to Google Calendar/iCal
 - [ ] Email notifications for deadlines
 
-## 📄 License
+## License
 
 This project is open-source. See the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Built with [Flask](https://flask.palletsprojects.com/)
 - AI powered by [Google Gemini](https://ai.google.dev/)
